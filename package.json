@@ -1,0 +1,28 @@
+{
+  "name": "wavenet-for-chrome",
+  "version": "5.0.0",
+  "description": "A wrapper for Google Cloud Text-to-Speech that transform highlighted text into high-quality natural sounding audio.",
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": "Michael Poirier-Ginter",
+  "license": "MIT",
+  "devDependencies": {
+    "@sentry/types": "^6.2.0",
+    "@types/chrome": "0.0.88",
+    "copy-webpack-plugin": "^7.0.0",
+    "file-loader": "^6.2.0",
+    "node-sass": "^5.0.0",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "ts-loader": "^8.0.17",
+    "typescript": "^3.6.2",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0"
+  },
+  "dependencies": {
+    "@sentry/browser": "^6.2.0",
+    "@sentry/tracing": "^6.2.0"
+  }
+}
