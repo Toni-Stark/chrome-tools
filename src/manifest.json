@@ -1,7 +1,7 @@
 {
   "name": "Wavenet for Chrome",
   "version": "5",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "A wrapper for Google Cloud Text-to-Speech that transform highlighted text into high-quality natural sounding audio.",
   "icons": {
     "19": "assets/images/icon_19.png",
@@ -9,9 +9,8 @@
     "128": "assets/images/icon_128.png"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -28,6 +27,7 @@
   "permissions": [
     "contextMenus",
     "storage",
+    "scripting",
     "downloads",
     "activeTab"
   ],
@@ -47,7 +47,7 @@
       "description": "Download selection"
     }
   },
-  "browser_action": {
+  "action": {
     "default_title": "Wavenet for Chrome",
     "default_icon": {
       "16": "assets/images/icon_16.png",

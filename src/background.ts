@@ -1,64 +1,26 @@
-import { initSentry } from "./sentry"
-import { getExtensionCommands, getExtensionInformation } from "./helpers"
-import Synthesizer from "./synthesizer"
-console.log(5555555)
-initSentry(await getExtensionInformation())
 
-const commands = await getExtensionCommands()
-const startCommand = commands.find(element => element.name === "speak")
-const downloadCommand = commands.find(element => element.name === "download")
-
-chrome.contextMenus.create({
-  id: 'start',
-  title: `Start Speaking${startCommand.shortcut ? ` (${startCommand.shortcut})` : ""}`,
-  contexts: ['selection'],
-  onclick: info => Synthesizer.start(info.selectionText)
+fetch('https://chengdu.baixing.com/ershougongchengche/a2593450496.html?from=regular').then(r => r.text()).then(result => {
+  // console.log(result);
 })
 
-chrome.contextMenus.create({
-  id: 'stop',
-  title: 'Stop Speaking',
-  contexts: ['selection'],
-  onclick: _ => Synthesizer.stop(),
-  enabled: false
-})
+let dataList = [];
+let currentNum = 0;
 
-chrome.contextMenus.create({
-  id: 'download',
-  title: `Download as MP3 ${downloadCommand.shortcut ? ` (${downloadCommand.shortcut})` : ""}`,
-  contexts: ['selection'],
-  onclick: info => Synthesizer.download(info.selectionText)
-})
+console.log("渲染一次")
 
-chrome.commands.onCommand.addListener(command => {
-  switch (command) {
-    case "speak":
-      chrome.tabs.executeScript(
-        { code: convertSelection },
-        selection => Synthesizer.start(selection[0])
-      )
-      break
-    case "download":
-      chrome.tabs.executeScript(
-        { code: convertSelection },
-        selection => Synthesizer.download(selection[0])
-      )
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  switch (message.tab) {
+    case "data-list":
+      dataList = dataList.concat(message.data);
+      sendResponse({dataList});
+      break;
+    case "data-info":
+      console.log(message, currentNum)
+      let index = dataList.findIndex((item, index)=>item.id === message.data.id);
+      dataList[index] = Object.assign({}, dataList[index], message.data);
+      console.log(dataList[index])
+      currentNum ++;
+      sendResponse({msg:'接受到', currentNum})
       break
   }
-})
-
-// Get the selected text and adds imgs alt tags into text
-const convertSelection = `
-function retrieveSelection() {
-  const selectionContents = window.getSelection()?.getRangeAt(0).cloneContents()
-  const imgs = selectionContents.querySelectorAll('img')
-  for (const img of imgs) {
-    const altText = document.createTextNode(img.alt)
-    img.parentNode.replaceChild(altText, img)
-  }
-
-  return selectionContents.textContent
-}
-
-retrieveSelection()
-`
+});
