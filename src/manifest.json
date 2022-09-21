@@ -1,8 +1,8 @@
 {
-  "name": "Wavenet for Chrome",
+  "name": "数据爬取工具",
   "version": "5",
   "manifest_version": 3,
-  "description": "A wrapper for Google Cloud Text-to-Speech that transform highlighted text into high-quality natural sounding audio.",
+  "description": "运行在网页上的爬虫工具",
   "icons": {
     "19": "assets/images/icon_19.png",
     "38": "assets/images/icon_38.png",

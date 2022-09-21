@@ -19,15 +19,20 @@ const setScroll = (callback) => {
                 clearInterval(interval)
                 callback()
             } else {
-                element.scrollTop += 300;
+                element.scrollTop += 30;
                 i += 1;
             }
         }
-        var interval = setInterval(main, 300)
+        var interval = setInterval(main, 10)
     }
 
     page_scroll(callback)
 };
+
+chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+    const { uri, data, type } = request;
+    console.log(uri, data, type, sender)
+})
 
 if(isDetail){
     let descStr = '';
@@ -36,35 +41,38 @@ if(isDetail){
             descStr += item.children[0].textContent+item.children[1].textContent;
         })
     let obj = {
-        id: pathName[pathName.length-1].split('.')[0].slice(1),
+        link: location.href,
         title: document.querySelectorAll('.viewad-title h1')[0].textContent,
         detail: descStr,
         phone: 12345678911,
         userName: document.querySelector('.poster-name').textContent,
     }
-    sendData(obj, res => window.close());
+    sendData(obj, res => {
+        // window.close()
+    });
 } else if ( locationHost && locationPathName && !isLoading) {
     isLoading = true;
     setScroll(()=>{
-        let ul_list = document.getElementsByClassName("list-ad-items");
+        let ul_list = document.querySelectorAll(".list-ad-items");
         let li_item = ul_list[0].querySelectorAll(".listing-ad");
 
         li_item.forEach((item)=>{
             let imgDom:HTMLImageElement = item.querySelector('.media-cap>img');
+            let title:HTMLLinkElement = item.querySelector('.ad-title');
             let obj = {
-                title: item.querySelector('.ad-title').textContent,
+                title: title.textContent,
                 address: item.querySelectorAll('.ad-item-detail')[0].textContent,
                 detail: item.querySelectorAll('.ad-item-detail')[1].textContent,
                 price: item.querySelector('.highlight').textContent,
                 background: imgDom?.src,
-                id: item.attributes['data-aid'].nodeValue
+                link: title.href
             };
             data.push(obj);
         })
-        // setTimeout(()=>{
-        //     let pageList:any = document.getElementsByClassName('list-pagination')[0].querySelectorAll('li>a');
-        //     pageList[pageList.length-1].click();
-        // },3000)
+        setTimeout(()=>{
+            let pageList:any = document.getElementsByClassName('list-pagination')[0].querySelectorAll('li>a');
+            pageList[pageList.length-1].click();
+        },3000)
         getDetailInfo(data);
     });
 }
