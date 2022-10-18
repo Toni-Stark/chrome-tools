@@ -155,8 +155,19 @@ const initList = () => {
   openStorage({key:'data-list', data: list});
 }
 
+const rootListener = () => {
+  let listBtn = document.getElementsByClassName('stop-list')[0];
+  let itemBtn = document.getElementsByClassName('stop-item')[0];
+
+  listBtn.addEventListener('click', ()=>{
+
+  });
+  itemBtn.addEventListener('click', ()=>{});
+}
+
 window.onload = () => {
   initList();
+  rootListener();
 };
 
 type DomType = {
