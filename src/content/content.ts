@@ -1,11 +1,18 @@
 import {getDetailInfo, sendData} from "./detailInfo";
+let data = [];
 
 let isLoading = false;
-let locationHost = location.host.split('.')[1] === 'baixing';
-let locationPathName  = location.pathname === '/ershouqiche/';
-let data = [];
-let pathName = location.pathname.split('/');
 let pattern = /a\d*\.html/;
+let locationHost = location.host.split('.')[1] === 'baixing';
+// // xiaoshou
+// let locationPathName = location.pathname === '/xiaoshou/';
+// ershouqiche
+let locationPathName = location.pathname === '/ershouqiche/';
+// // ershouqiche
+// let locationPathName = location.pathname === '/ershouqiche/';
+// // ershouqiche
+// let locationPathName = location.pathname === '/ershouqiche/';
+let pathName = location.pathname.split('/');
 let isDetail = pattern.test(pathName[pathName.length-1]);
 const setScroll = (callback) => {
 
@@ -19,7 +26,7 @@ const setScroll = (callback) => {
                 clearInterval(interval)
                 callback()
             } else {
-                element.scrollTop += 30;
+                element.scrollTop += 10;
                 i += 1;
             }
         }
@@ -33,8 +40,10 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
     const { uri, data, type } = request;
     console.log(uri, data, type, sender)
 })
-
 if(isDetail){
+    /**
+     *  二手汽车，二手房，二手手机，二手电脑，二手家电，宠物猫，宠物狗通用
+     */
     let descStr = '';
     let descList = document.querySelectorAll('.viewad-meta2 .viewad-meta2-item');
         descList.forEach((item, index)=>{
@@ -47,12 +56,33 @@ if(isDetail){
         phone: 12345678911,
         userName: document.querySelector('.poster-name').textContent,
     }
+    /**
+     *  销售通用
+     */
+    // let descStr = '';
+    // let descList = document.querySelectorAll('.viewad-meta2 .viewad-meta2-item');
+    // descList.forEach((item, index)=>{
+    //     descStr += item.children[0].textContent+item.children[1].textContent;
+    // })
+    // let detail = document.getElementsByClassName('viewad-text')[0].textContent;
+    // let obj = {
+    //     link: location.href,
+    //     title: document.querySelectorAll('.viewad-title h1')[0].textContent,
+    //     address: descStr,
+    //     phone: 12345678911,
+    //     userName: document.querySelector('.poster-name').textContent,
+    //     detail: detail
+    // }
+    console.log(obj);
     sendData(obj, res => {
         // window.close()
     });
 } else if ( locationHost && locationPathName && !isLoading) {
     isLoading = true;
     setScroll(()=>{
+        /**
+         *  二手汽车，二手房，二手手机，二手电脑，二手家电，宠物猫，宠物狗通用
+         */
         let ul_list = document.querySelectorAll(".list-ad-items");
         let li_item = ul_list[0].querySelectorAll(".listing-ad");
 
@@ -65,14 +95,30 @@ if(isDetail){
                 detail: item.querySelectorAll('.ad-item-detail')[1].textContent,
                 price: item.querySelector('.highlight').textContent,
                 background: imgDom?.src,
-                link: title.href
+                link: title.href,
+                url: location.href.split('\?')[0]
             };
             data.push(obj);
         })
-        setTimeout(()=>{
-            let pageList:any = document.getElementsByClassName('list-pagination')[0].querySelectorAll('li>a');
-            pageList[pageList.length-1].click();
-        },3000)
+        /**
+         *  销售通用
+         */
+        // let ul_list = document.querySelectorAll(".table-view");
+        // let li_item = ul_list[0].querySelectorAll(".listing-ad");
+        // li_item.forEach((item)=>{
+        //     let title:HTMLLinkElement = item.querySelector('.ad-title');
+        //     let obj = {
+        //         title: title.textContent,
+        //         price: item.querySelector('.salary').textContent,
+        //         link: title.href
+        //     };
+        //     data.push(obj);
+        // })
+        console.log(data);
+        // setTimeout(()=>{
+        //     let pageList:any = document.getElementsByClassName('list-pagination')[0].querySelectorAll('li>a');
+        //     pageList[pageList.length-1].click();
+        // },3000)
         getDetailInfo(data);
     });
 }

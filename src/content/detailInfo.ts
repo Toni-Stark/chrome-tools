@@ -11,6 +11,7 @@ export const getDetailInfo = (data) => {
                 isStart = true;
                 return new Promise((resolve, reject) => {
                     if(!result.hadNewWeb){
+                        console.log(dataList, currentNum, 'log----------------');
                         window.open(`${dataList[currentNum].link}`);
                     }
                 })
@@ -21,12 +22,14 @@ export const getDetailInfo = (data) => {
 
 export const sendData = (data, callback) => {
     chrome.runtime.sendMessage({tab: 'data-info',data, num: localStorage.getItem('num') }, (result) => {
-        console.log(currentNum, result.dataList.length - 1)
+        console.log(currentNum, data)
         if(Number(currentNum) < result.dataList.length - 1){
             callback(result)
             currentNum = Number(result.num) + 1;
-            localStorage.setItem('num', String(currentNum));
-            location.href = `${result.dataList[currentNum].link}`;
+            setTimeout(()=>{
+                localStorage.setItem('num', String(currentNum));
+                location.href = `${result.dataList[currentNum].link}`;
+            }, 5000);
         } else {
             chrome.runtime.sendMessage({tab: 'data-end',data, num: localStorage.getItem('num') }, (result) => {
                 window.close();
