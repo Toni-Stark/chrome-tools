@@ -1,12 +1,12 @@
 {
-  "name": "wavenet-for-chrome",
+  "name": "listener-for-url",
   "version": "5.0.0",
-  "description": "A wrapper for Google Cloud Text-to-Speech that transform highlighted text into high-quality natural sounding audio.",
+  "description": "用以url溯源",
   "scripts": {
     "start": "webpack --watch",
     "build": "webpack"
   },
-  "author": "Michael Poirier-Ginter",
+  "author": "Gerric",
   "license": "MIT",
   "devDependencies": {
     "@sentry/types": "^6.2.0",

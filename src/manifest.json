@@ -1,8 +1,8 @@
 {
-  "name": "数据爬取工具",
+  "name": "url溯源工具",
   "version": "5",
   "manifest_version": 3,
-  "description": "运行在网页上的爬虫工具",
+  "description": "谷歌便捷工具",
   "icons": {
     "19": "assets/images/icon_19.png",
     "38": "assets/images/icon_38.png",
