@@ -25,11 +25,8 @@
     }
   ],
   "permissions": [
-    "contextMenus",
-    "storage",
-    "scripting",
-    "downloads",
-    "activeTab"
+    "debugger",
+    "tabs"
   ],
   "commands": {
     "speak": {

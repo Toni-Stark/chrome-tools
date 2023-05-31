@@ -1,200 +1,508 @@
-let list: Array<Partial<ParamsType>> = [
-  {
-    title: 'list',
-    type: 'view',
-    class: '',
-    placeholder: '例：body > .content-list',
-    must: true,
-  },
-  {
-    title: 'item',
-    type: 'view',
-    class: '',
-    placeholder: '例：.content-list > .content-item',
-  },
-  {
-    title: '缩略图',
-    type: 'img',
-    label: '缩略图',
-    class: '',
-    placeholder: '例：.item > img',
-  },
-  {
-    title: '标题',
-    type: 'value',
-    label: '标题',
-    class: '',
-    placeholder: '例：.title',
-  },
-  {
-    title: '详情链接',
-    type: 'link',
-    label: '链接',
-    class: '',
-    placeholder: '例：.title a',
-  },
+import { END_URL, LIST_URL } from '../config/types';
+let dataList = [
+  'http://www.zzlpbob.com',
+  'http://www.kidyerrq.com',
+  'http://www.blbgweo.com',
+  'http://www.ahtomdq.com',
+  'http://www.vhrojvj.com',
+  'http://www.bynnmdph.com',
+  'http://www.aetize.com',
+  'http://www.fotrhj.com',
+  'http://www.bwjtaac.com',
+  'http://www.xuofkton.com',
+  'http://www.jgsehif.com',
+  'http://www.eelrlxq.com',
+  'http://www.ggufuko.com',
+  'http://www.uypwhuit.com',
+  'http://www.wfleru.com',
+  'http://www.detlwx.com',
+  'http://www.xmsjurg.com',
+  'http://www.bmuudjb.com',
+  'http://www.kefhwpgt.com',
+  'http://www.orlird.com',
+  'http://www.ypxcdzt.com',
+  'http://www.nevlyvz.com',
+  'http://www.kbnonyqf.com',
+  'http://www.cixuyn.com',
+  'http://www.ieokrxc.com',
+  'http://www.azovdga.com',
+  'http://www.urlgxlwx.com',
+  'http://www.hpiweq.com',
+  'http://www.ngebitz.com',
+  'http://www.psronbg.com',
+  'http://www.fwjjiurv.com',
+  'http://www.oqdgxn.com',
+  'http://www.gbhytvx.com',
+  'http://www.ntioouan.com',
+  'http://www.miomryh.com',
+  'http://www.azmtftb.com',
+  'http://www.jayqkgg.com',
+  'http://www.sysjrvuz.com',
+  'http://www.dvneim.com',
+  'http://www.faeiczh.com',
+  'http://www.erwztde.com',
+  'http://www.keoocjhe.com',
+  'http://www.raoufy.com',
+  'http://www.mgqrsze.com',
+  'http://www.htsssaj.com',
+  'http://www.urvzhugo.com',
+  'http://www.iniily.com',
+  'http://www.rqiiwz.com',
+  'http://www.xfxnvji.com',
+  'http://www.qmfolpx.com',
+  'http://www.lsfxsvxp.com',
+  'http://www.kcodck.com',
+  'http://www.wukcxrb.com',
+  'http://www.cdrmqibk.com',
+  'http://www.sylukkq.com',
+  'http://www.qasbdzv.com',
+  'http://www.rbqilzg.com',
+  'http://www.glzgifbn.com',
+  'http://www.frctsx.com',
+  'http://www.bpjqura.com',
+  'http://www.rccrpue.com',
+  'http://www.hvmjmvfy.com',
+  'http://www.xkfnvo.com',
+  'http://www.czozwcz.com',
+  'http://www.ndppbka.com',
+  'http://www.whuynckf.com',
+  'http://www.ciqyez.com',
+  'http://www.qbyhmc.com',
+  'http://www.kcopkmw.com',
+  'http://www.hwppqno.com',
+  'http://www.fphnznwq.com',
+  'http://www.xsgkxk.com',
+  'http://www.ycpllr.com',
+  'http://www.eijnupb.com',
+  'http://www.wuvpimt.com',
+  'http://www.aaxupnmi.com',
+  'http://www.ebzcld.com',
+  'http://www.tzjzmpg.com',
+  'http://www.xztnnyr.com',
+  'http://www.aflvqcov.com',
+  'http://www.yjfszt.com',
+  'http://www.hgtmawx.com',
+  'http://www.qdfyeqrb.com',
+  'http://www.hlbllzh.com',
+  'http://www.sguvgfx.com',
+  'http://www.bcvfejw.com',
+  'http://www.zqncvjuw.com',
+  'http://www.msxizt.com',
+  'http://www.nyqller.com',
+  'http://www.jsxcljt.com',
+  'http://www.bhseuemi.com',
+  'http://www.rubmgs.com',
+  'http://www.gglpdmw.com',
+  'http://www.lilnfaw.com',
+  'http://www.jkmpzrrv.com',
+  'http://www.skbquz.com',
+  'http://www.fkqxciz.com',
+  'http://www.bynohomb.com',
+  'http://www.olajvoi.com',
+  'http://www.bgmjdvo.com',
+  'http://www.hchxjbi.com',
+  'http://www.lwsgkdpa.com',
+  'http://www.wxkrbc.com',
+  'http://www.ffsqaor.com',
+  'http://www.udygwva.com',
+  'http://www.schgihuu.com',
+  'http://www.lyaggy.com',
+  'http://www.aqxfntk.com',
+  'http://www.ctfwvcv.com',
+  'http://www.xhvrdrkd.com',
+  'http://www.bzqihg.com',
+  'http://www.kpgzbp.com',
+  'http://www.dkpmrbc.com',
+  'http://www.xgakvjz.com',
+  'http://www.oiiypboo.com',
+  'http://www.smdlnj.com',
+  'http://www.tilrury.com',
+  'http://www.kvxdyepu.com',
+  'http://www.xjzozwo.com',
+  'http://www.yiasufn.com',
+  'http://www.uzocxpy.com',
+  'http://www.hjsythuu.com',
+  'http://www.iqungt.com',
+  'http://www.hvgveez.com',
+  'http://www.beotzzj.com',
+  'http://www.cfkleulu.com',
+  'http://www.cmwhqn.com',
+  'http://www.mmqvtio.com',
+  'http://www.jmbocyn.com',
+  'http://www.brrknxva.com',
+  'http://www.wdcglx.com',
+  'http://www.gllryh.com',
+  'http://www.hcxzipw.com',
+  'http://www.gvaddqww.com',
+  'http://www.tlfpspy.com',
+  'http://www.eqmgpgd.com',
+  'http://www.mtlpyhw.com',
+  'http://www.bydxgqpo.com',
+  'http://www.irvshp.com',
+  'http://www.nvdbxq.com',
+  'http://www.ycphkky.com',
+  'http://www.jxkgknp.com',
+  'http://www.zklxdde.com',
+  'http://www.opflby.com',
+  'http://www.gegzfht.com',
+  'http://www.qptwesk.com',
+  'http://www.qtsvdgn.com',
+  'http://www.dlpnsf.com',
+  'http://www.apjnnbz.com',
+  'http://www.afgyhrzx.com',
+  'http://www.hqnsdie.com',
+  'http://www.wcggmoa.com',
+  'http://www.pdpxhdd.com',
+  'http://www.ayumemel.com',
+  'http://www.fcxjhe.com',
+  'http://www.ruiufmd.com',
+  'http://www.utbtejb.com',
+  'http://www.ksijiput.com',
+  'http://www.cudgri.com',
+  'http://www.rcxiugx.com',
+  'http://www.baeqanq.com',
+  'http://www.rxlevjt.com',
+  'http://www.iuamtx.com',
+  'http://www.mrtfof.com',
+  'http://www.risdfso.com',
+  'http://www.xezsugzy.com',
+  'http://www.dczycwp.com',
+  'http://www.lxiydlu.com',
+  'http://www.ylkoiny.com',
+  'http://www.pvoeidao.com',
+  'http://www.uxbizz.com',
+  'http://www.nagwmmj.com',
+  'http://www.rqmbkaq.com',
+  'http://www.gxarboz.com',
+  'http://www.gzgdtnq.com',
+  'http://www.qfeluum.com',
+  'http://www.wcbfjman.com',
+  'http://www.mpbujv.com',
+  'http://www.onqetg.com',
+  'http://www.kcvyqov.com',
+  'http://www.yrmsjtq.com',
+  'http://www.mwajtknz.com',
+  'http://www.meispi.com',
+  'http://www.resssy.com',
+  'http://www.zuhfcyb.com',
+  'http://www.qztgkak.com',
+  'http://www.dpylrhlp.com',
+  'http://www.odzbyd.com',
+  'http://www.zljlbt.com',
+  'http://www.tyfsxfa.com',
+  'http://www.adtjhaj.com',
+  'http://www.xmxqxqg.com',
+  'http://www.gvlvaz.com',
+  'http://www.lrdsyqf.com',
+  'http://www.obcxnkz.com',
+  'http://www.ihbbvyrh.com',
+  'http://www.opufsj.com',
+  'http://www.qvjkdsh.com',
+  'http://www.mtqxtfy.com',
+  'http://www.xdfxiqgm.com',
+  'http://www.evtwlu.com',
+  'http://www.napnhi.com',
+  'http://www.cyjeofu.com',
+  'http://www.yzrhjcdc.com',
+  'http://www.pgfebmu.com',
+  'http://www.reocttl.com',
+  'http://www.fartubk.com',
+  'http://www.ezxyjjwr.com',
+  'http://www.ailxye.com',
+  'http://www.amsegi.com',
+  'http://www.ryqjeky.com',
+  'http://www.oqxqjbqk.com',
+  'http://www.pmjxyuw.com',
+  'http://www.xwpcxmg.com',
+  'http://www.xzplqqb.com',
+  'http://www.pxufmecf.com',
+  'http://www.pjivue.com',
+  'http://www.fujbqhc.com',
+  'http://www.tchhymca.com',
+  'http://www.rkvjtuj.com',
+  'http://www.rzjzfmy.com',
+  'http://www.htpelbdz.com',
+  'http://www.sixhsww.com',
+  'http://www.zqagifw.com',
+  'http://www.fhospix.com',
+  'http://www.vrdhojtm.com',
+  'http://www.wlpotm.com',
+  'http://www.lxczeky.com',
+  'http://www.ncaqpeu.com',
+  'http://www.lbccqmqe.com',
+  'http://www.dbcvnl.com',
+  'http://www.yjbswox.com',
+  'http://www.qysghom.com',
+  'http://www.apmipimv.com',
+  'http://www.bqhqzt.com',
+  'http://www.mygugey.com',
+  'http://www.rnsifuf.com',
+  'http://www.emnyfttp.com',
+  'http://www.svfqqi.com',
+  'http://www.tkosujg.com',
+  'http://www.srxyfbf.com',
+  'http://www.qdnjythj.com',
+  'http://www.aazzzx.com',
+  'http://www.fquihfc.com',
+  'http://www.bmdkrpm.com',
+  'http://www.eqsbdiif.com',
+  'http://www.pyczom.com',
+  'http://www.ncblqfa.com',
+  'http://www.aiqgeed.com',
+  'http://www.rtbnknnv.com',
+  'http://www.gsbimk.com',
+  'http://www.amzshht.com',
+  'http://www.iztxgga.com',
+  'http://www.xfmxfilj.com',
+  'http://www.lkexgv.com',
+  'http://www.nezvycp.com',
+  'http://www.sjzrmwj.com',
+  'http://www.injfmoiw.com',
+  'http://www.vmsbgq.com',
+  'http://www.bhafxx.com',
+  'http://www.rpnmqdk.com',
+  'http://www.svxxrxzj.com',
+  'http://www.jvhzocq.com',
+  'http://www.gdbvdtg.com',
+  'http://www.rbjojds.com',
+  'http://www.cnjakxrb.com',
+  'http://www.drqkus.com',
+  'http://www.jcexkvy.com',
+  'http://www.xkrqcgw.com',
+  'http://www.apndqkbv.com',
+  'http://www.canwso.com',
+  'http://www.jmemvie.com',
+  'http://www.xgqslqp.com',
+  'http://www.wxgcwcwe.com',
+  'http://www.mwpeuw.com',
+  'http://www.znsank.com',
+  'http://www.dyiofwu.com',
+  'http://www.wcflggd.com',
+  'http://www.hxdzdska.com',
+  'http://www.apphwl.com',
+  'http://www.snioamw.com',
+  'http://www.bcdqmis.com',
+  'http://www.pvbflank.com',
+  'http://www.eftbqv.com',
+  'http://www.sdrynfx.com',
+  'http://www.izajjxs.com',
+  'http://www.zksghkkc.com',
+  'http://www.enfcet.com',
+  'http://www.xxlbns.com',
+  'http://www.ekzvxyg.com',
+  'http://www.ujghyum.com',
+  'http://www.utbinfig.com',
+  'http://www.zvuvml.com',
+  'http://www.yzyplrv.com',
+  'http://www.spiszbh.com',
+  'http://www.yzomhpdg.com',
+  'http://www.eyuwvf.com',
+  'http://www.inhgozp.com',
+  'http://www.cfacxvb.com',
+  'http://www.uswutbcu.com',
+  'http://www.jtgdnq.com',
+  'http://www.gexzck.com',
+  'http://www.quhxddx.com',
+  'http://www.wbgtxmuv.com',
+  'http://www.tfvlxay.com',
+  'http://www.sqahqcm.com',
+  'http://www.jeqltqv.com',
+  'http://www.isgwreqn.com',
+  'http://www.htpkmc.com',
+  'http://www.bmtqqgl.com',
+  'http://www.novubfn.com',
+  'http://www.fkslytik.com',
+  'http://www.lzvlxp.com',
+  'http://www.ejvmfg.com',
+  'http://www.vrqplgf.com',
+  'http://www.ievjoom.com',
+  'http://www.sgklpiko.com',
+  'http://www.vtnslx.com',
+  'http://www.tsiuqgy.com',
+  'http://www.xnwdotl.com',
+  'http://www.eaiythoq.com',
+  'http://www.svjsck.com',
+  'http://www.jtyxtdo.com',
+  'http://www.qsngfrw.com',
+  'http://www.osngwmkd.com',
+  'http://www.vxvvdd.com',
+  'http://www.yvmgowk.com',
+  'http://www.hzcqrjli.com',
+  'http://www.lvkiegw.com',
+  'http://www.qyhpgqp.com',
+  'http://www.ovknpzh.com',
+  'http://www.thobntyp.com',
+  'http://www.xuosum.com',
+  'http://www.fjrfffr.com',
+  'http://www.ogzphnh.com',
+  'http://www.eunuppiq.com',
+  'http://www.dqsgyn.com',
+  'http://www.ukzupgw.com',
+  'http://www.iebcyhx.com',
+  'http://www.eelvbuwc.com',
+  'http://www.metywi.com',
+  'http://www.rkcsac.com',
+  'http://www.npmpeme.com',
+  'http://www.rgprmur.com',
+  'http://www.jpjswbwh.com',
+  'http://www.hdnrmp.com',
+  'http://www.oksrzg.com',
+  'http://www.zvqfrfb.com',
+  'http://www.nwtijlu.com',
+  'http://www.funegzvy.com',
+  'http://www.knmfgj.com',
+  'http://www.mgghlg.com',
+  'http://www.wodlgpl.com',
+  'http://www.fqlwkyq.com',
+  'http://www.xjpryvun.com',
+  'http://www.tivtwf.com',
+  'http://www.ksqcrkj.com',
+  'http://www.hvpnodk.com',
+  'http://www.tzyghe.com',
+  'http://www.gjhvsv.com',
+  'http://www.ilosnyg.com',
+  'http://www.yxebmytl.com',
+  'http://www.epvgwes.com',
+  'http://www.egowmjz.com',
+  'http://www.ckgqehil.com',
+  'http://www.kokwagl.com',
+  'http://www.sbxctou.com',
+  'http://www.nltppryt.com',
+  'http://www.vlmervs.com',
+  'http://www.qkxjvez.com',
+  'http://www.rhwohte.com',
+  'http://www.dcfsox.com',
+  'http://www.hfyjpm.com',
+  'http://www.ixbijt.com',
+  'http://www.xwfriip.com',
+  'http://www.vxsusbon.com',
+  'http://www.bjbylw.com',
+  'http://www.ogpxrhr.com',
+  'http://www.ivijlxb.com',
+  'http://www.lgaudnaw.com',
+  'http://www.zlpxrd.com',
+  'http://www.yzaiuv.com',
+  'http://www.kxkpmwv.com',
+  'http://www.urdqvgw.com',
+  'http://www.kwbhnfkl.com',
+  'http://www.zuqrbl.com',
+  'http://www.dsjxqj.com',
+  'http://www.xnkqkwg.com',
+  'http://www.gwxhynsg.com',
+  'http://www.mlwmxrz.com',
+  'http://www.dvxvfsb.com',
+  'http://www.btguxqy.com',
+  'http://www.hvuitfbn.com',
+  'http://www.lcwftb.com',
+  'http://www.ipggelu.com',
+  'http://www.dtvxcwn.com',
+  'http://www.wzrijxpy.com',
+  'http://www.logrjs.com',
+  'http://www.ojxsiwk.com',
+  'http://www.ujyrulq.com',
+  'http://www.czhgcbas.com',
+  'http://www.vueogr.com',
+  'http://www.pdkiegr.com',
+  'http://www.gfoiwbep.com',
+  'http://www.vvplsdb.com',
+  'http://www.lwuanbo.com',
+  'http://www.kkujkiw.com',
+  'http://www.keirvgcq.com',
+  'http://www.suvtum.com',
+  'http://www.ivpehkj.com',
+  'http://www.yftzygg.com',
+  'http://www.gkrfcalf.com',
+  'http://www.wgklie.com',
+  'http://www.rvfpab.com',
+  'http://www.xotloqq.com',
+  'http://www.qxatiesh.com',
+  'http://www.ttmyxum.com',
+  'http://www.vafpdvo.com',
+  'http://www.yvjpknh.com',
+  'wwwhttp://.wfbztsnj.com',
+  'http://www.lxxakh.com',
+  'http://www.ireyux.com',
+  'http://www.chfnhnj.com',
+  'http://www.vuulumud.com',
+  'http://www.pzyqjgt.com',
+  'http://www.pixhoeu.com',
+  'http://www.kllrwuy.com',
+  'http://www.bxrntvhn.com',
+  'http://www.juqawm.com',
+  'http://www.pkiwtij.com',
+  'http://www.kbccnbs.com',
+  'http://www.umqqloiz.com',
+  'http://www.jlnvtz.com',
+  'http://www.bltzeoy.com',
+  'http://www.mfbwpbk.com',
+  'http://www.yqjixara.com',
+  'http://www.sdtvml.com',
+  'http://www.nfienps.com',
+  'http://www.usbmdlxp.com',
+  'http://www.qqguiqu.com',
+  'http://www.jkyabjs.com',
+  'http://www.xnlrwrre.com',
+  'http://www.tnkvgmy.com',
+  'http://www.bupmdhj.com',
+  'http://www.npbsjabx.com',
+  'http://www.sfrqlxh.com',
+  'http://www.gomxxux.com',
+  'http://www.hjfpxek.com',
+  'http://www.vwpyohdb.com',
+  'http://www.cqpyra.com',
+  'http://www.ilreyd.com',
+  'http://www.txiqfpp.com',
+  'http://www.xzsxqha.com',
+  'http://www.rjvwdpij.com',
+  'http://www.exwmwo.com'
+];
+let urlList = [
+  // 'https://www.baidu.com/link?url=y9JBjG8RghHCBaFYNUVBQuSrZcM5aW1p9y66I8C6E68DHhyD8WrDlt4MPF_MrOx8&wd=&eqid=a641cde900003727000000066476ab76',
+  // 'http://sucheng.m.yiefun.com/150188.html',
+  // 'http://www.sggjsmgy.cn/',
+  // 'http://www.maiicy.cn/',
+  // 'http://yysy8.com/',
+  // 'http://www.shenzhoujiaxin.com/',
+  // 'http://fsqiming.com/',
+  // 'https://tjquanlilai.cn/',
+  // 'http://www.shenghecoffee.cn/',
+  // 'https://riwulighting.com/',
+  // 'http://gdvector.cn/',
+  'http://www.jmyaolian.cn/',
+  'http://yangtaicable.com/',
+  'http://yaolonggroup.com/',
+  'http://weidongjc.com/',
+  'http://dodoka.cc/',
+  'http://jingahs.com/'
+  // 'http://www.ts-zz.com/',
+  // 'http://www.sdpsjy.cn/',
+  // 'http://www.escocoupling.cn/',
+  // 'https://sdstone.com.cn/',
+  // 'https://kuanzhan.org/',
+  // 'https://uf-c.cn/',
+  // 'http://jyatoz.cn/',
+  // 'http://dlkhgd.cn/',
+  // 'http://www.zbythg.cn/',
+  // 'http://www.groupfangyuan.cn/',
+  // 'http://www.jmhaosheng.cn/',
+  // 'http://houdutech.com/',
+  // 'http://www.dakesheji.cn/',
+  // 'http://www.zhshirtmaster.cn/',
+  // 'http://www.zhengdanhua.cn/',
+  // 'http://chemplus-sci.com/',
+  // 'http://guodalighting.com/',
+  // 'http://www.bapc-heater.com/',
+  // 'http://minshengkonggu.cn/',
+  // 'http://www.xckwy.com/'
 ];
 
-const openStorage = ({key, data, callback}: Partial<StorageType>) => {
-  if(data){
-    localStorage.setItem(key, JSON.stringify(data));
-  } else {
-    return JSON.parse(localStorage.getItem(key));
-  }
-  callback && callback()
-};
-
-let addBtn = document.getElementsByClassName('add-class')[0];
-let over = document.getElementsByClassName('over')[0];
 let start = document.getElementsByClassName('start')[0];
-let listRoute = document.getElementsByClassName('list-route')[0];
-
-addBtn.addEventListener('click', (e)=>{
-  let domList = document.getElementsByClassName('list')[0];
-  let nameView: any = document.getElementsByClassName('add-name')[0];
-  let valueView: any = document.getElementsByClassName('add-value')[0];
-  let labelView: any = document.getElementsByClassName('add-label')[0];
-  if (!nameView?.value || !valueView?.value || !labelView?.value) {
-    alert('请完整填入')
-    return;
-  }
-  let obj: Partial<ParamsType> = {
-    title: nameView.value,
-    label: labelView.value,
-    class: valueView.value,
-    type: 'value',
-  }
-  list.push(obj);
-  nameView.value='';
-  labelView.value='';
-  valueView.value='';
-  openStorage({key:'data-list', data: list})
-  domList.appendChild(createItem(obj, list.length-1));
-})
-
-over.addEventListener('click', (e)=> {
-  chrome.runtime.sendMessage({tab: 'list-url', isStart: false},(result) => {
-    console.log(result)
-  })
-})
-start.addEventListener('click', (e)=> {
-  let dataList = openStorage({key: 'data-list'});
-  let listUrl = openStorage({key: 'list-url'});
-
-  chrome.runtime.sendMessage({tab: 'list-url', dataList, listUrl, isStart: true},(result) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.runtime.sendMessage({tab: tabs[0].id, listUrl, isStart: true}, (contentResult) => {
-        console.log(contentResult)
-      });
-    })
-  })
-})
-
-listRoute.addEventListener('change', (e:any)=> {
-  openStorage({key: 'list-url', data: e.target.value})
-})
-const onChangeValue = (e) => {
-   console.log(e);
-}
-
-const onChangeLabel = (e) => {
-  console.log(e);
-}
-
-const deleteLabel = (e) => {
-  console.log(e);
-}
-
-const createDom = (data: Partial<DomType>): Document => {
-  let obj = document.createElement(data.dom);
-  let jsonList = openStorage({key:'data-list'})
-  Object.keys(data).map((item, index) => {
-    if (['dom', 'index', 'onChange', 'onClick'].includes(item) === false) obj[item] = data[item];
-    if (['onChange'].includes(item)) obj.addEventListener('change', (e)=>{
-      if(e.target.className === "item-label"){
-        jsonList[data.index]['label'] = e.target.value
-      } else {
-        jsonList[data.index]['class'] = e.target.value
-      }
-      openStorage({key: 'data-list', data: jsonList})
-    })
-    if (['onClick'].includes(item)) obj.addEventListener('click', (e)=>{
-      let objJson = openStorage({key: 'data-list'});
-      objJson.splice(data.index, 1);
-      openStorage({key: 'data-list', data: objJson, callback: ()=>initList()});
-    })
-  })
-  return obj
-}
-
-const createItem = (item, index) => {
-  let dom: Document = createDom({dom: 'div', className: 'item'});
-  let div: Document = createDom({dom: 'div', textContent: item.title});
-  let input: Document = createDom({dom: 'input', placeholder: item.placeholder || '未设置', type:'text', value: item?.class || '', onChange: onChangeValue, index});
-  let btn: Document = !item.must && createDom({dom: 'button', className: 'add-btn', textContent:'删除', onClick: deleteLabel, index});
-  let label: Document = item.label && createDom({dom: 'input', className: 'item-label', placeholder: item.label || '未设置', type:'text', value: item?.label || '', onChange: onChangeLabel, index});
-  dom.appendChild(div)
-  dom.appendChild(input)
-  label && dom.appendChild(label)
-  btn && dom.appendChild(btn)
-  return dom
-}
-
-const initList = () => {
-  let domList: any = document.getElementsByClassName('list')[0];
-  let listRoute: any = document.getElementsByClassName('list-route')[0];
-  listRoute.value = openStorage({key: 'list-url'})
-  domList.innerHTML = '';
-  let jsonList = openStorage({key:'data-list'});
-  console.log(domList, jsonList)
-  list = jsonList ? jsonList : list;
-  list.map((item, index)=>{
-    let dom = createItem(item, index);
-    domList.appendChild(dom);
-  })
-  openStorage({key:'data-list', data: list});
-}
-
-const rootListener = () => {
-  let listBtn = document.getElementsByClassName('stop-list')[0];
-  let itemBtn = document.getElementsByClassName('stop-item')[0];
-
-  listBtn.addEventListener('click', ()=>{
-
+start.addEventListener('click', (e) => {
+  chrome.runtime.sendMessage({ tab: LIST_URL, arr: dataList }, (result) => {
+    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    //   chrome.runtime.sendMessage({tab: tabs[0].id, isStart: true}, (contentResult) => {
+    //     console.log(contentResult)
+    //   });
+    // })
   });
-  itemBtn.addEventListener('click', ()=>{});
-}
-
-window.onload = () => {
-  initList();
-  rootListener();
-};
-
-type DomType = {
-  dom: any;
-  className: any;
-  type: any;
-  style: any;
-  textContent: any;
-  placeholder: any;
-  value: any;
-  onChange: (e) => void;
-  onClick: (e) => void;
-  index: number;
-}
-
-type ParamsType = {
-  title: string;
-  type: string,
-  class: string,
-  label: string,
-  placeholder: string,
-  must: boolean,
-  value: boolean,
-}
-
-type StorageType = {
-  key: string,
-  data: any,
-  callback: () => void
-}
+});
