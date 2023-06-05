@@ -1,70 +1,63 @@
-import { LIST_URL } from './config/types';
+import { END_URL, LIST_URL } from './config/types';
 
 let tabList = {};
-let dataList = [];
-let current: any = { url: '', run: false };
-let tabTimer = null;
-let createTimer = null;
-let serviceId = null;
-let currentIndex = 0;
+let tabTimer = {};
 
+let current = 0;
+let lisInter = null;
+let listenerList = [];
+
+let data = [];
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.tab === LIST_URL) {
-    startGetUrlReferer(message.arr, 0);
+    data = message.arr;
+    startGetUrlReferer(data);
+    sendResponse(true);
+    return true;
+  }
+  if (message.tab === END_URL) {
+    console.log('结束按钮');
+    clearDataListener();
     sendResponse(true);
     return true;
   }
 });
 
-function startGetUrlReferer(arr, index) {
-  let params = { url: arr[index], run: true };
-  dataList = arr;
-
-  if (!current?.run && serviceId) {
-    current = params;
-    chrome.tabs.update(serviceId, { url: arr[index] });
-    currentIndex = index + 1;
-    return;
-  }
-  current = params;
-  chrome.tabs.create({ url: arr[index] });
-  currentIndex = index + 1;
+function startGetUrlReferer(arr) {
+  lisInter = setInterval(() => {
+    if (listenerList.length >= 20) return;
+    if (current < arr.length) {
+      chrome.tabs.create({ url: arr[current], selected: false, active: false });
+      listenerList.push(current);
+      current++;
+    }
+    if (current >= arr.length) clearInterval();
+  }, 1000);
 }
 
 chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
-  if (!serviceId) {
-    serviceId = tabId;
-  }
-  if (serviceId !== tabId) return;
-  clearTimeout(tabTimer);
-  tabTimer = null;
-  if (!tabList[currentIndex]) {
-    tabList[currentIndex] = [tab.url];
+  clearTimeout(tabTimer[tabId]);
+  tabTimer[tabId] = null;
+  if (!tabList[tabId]) {
+    tabList[tabId] = [tab.url];
   } else {
-    if (tabList[currentIndex][tabList[currentIndex].length - 1] !== tab.url) tabList[currentIndex].push(tab.url);
+    if (tabList[tabId][tabList[tabId].length - 1] !== tab.url) tabList[tabId].push(tab.url);
   }
   if (tab.status !== 'complete') return;
-  tabTimer = setTimeout(() => {
-    console.log(tab.url);
-    clearTimeout(tabTimer);
-    tabTimer = null;
-    current.run = false;
-    startGetUrlReferer(dataList, currentIndex);
-    if (dataList.length !== Object.keys(tabList).length) return;
-    clearData();
-  }, 2000);
-});
-
-function clearData() {
-  clearInterval(createTimer);
-  createTimer = null;
-  if (serviceId) {
-    chrome.tabs.remove(serviceId, () => {
-      serviceId = null;
-      tabTimer = null;
-      createTimer = null;
-      current = { url: '', run: false };
-      currentIndex = 0;
+  tabTimer[tabId] = setTimeout(() => {
+    clearTimeout(tabTimer[tabId]);
+    tabTimer[tabId] = null;
+    chrome.tabs.remove(tabId, () => {
+      tabTimer[tabId] = null;
+      listenerList.splice(0, 1);
     });
+  }, 15000);
+  console.log(Object.keys(tabList).length, data.length);
+  if (Object.keys(tabList).length >= data.length) {
+    console.log(tabList);
   }
+});
+function clearDataListener() {
+  clearInterval(lisInter);
+  lisInter = null;
 }
