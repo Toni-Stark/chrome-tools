@@ -14,6 +14,40 @@ let time1 = null;
 
 let currentType = CLOSE_EXTENSION_BAT;
 
+chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
+  if (currentType !== OPEN_EXTENSION_BAT) {
+    return;
+  }
+  if(tabList[tabId]?.length>1 && tabList[tabId][tabList[tabId].length - 1] === setDelEndLine(tab.url)){
+    return;
+  }
+  if (tabList[tabId]?.length > 0) {
+    if (tabList[tabId][tabList[tabId].length - 1] !== setDelEndLine(tab.url)) {
+      tabList[tabId].push(setDelEndLine(tab.url));
+    }
+  } else {
+    tabList[tabId] = [setDelEndLine(tab.url)];
+  }
+
+  clearTimeout(tabTimer[tabId]);
+  tabTimer[tabId] = null;
+  tabTimer[tabId] = setTimeout(() => {
+    chrome.tabs.get(tabId, function(tab) {
+      if (tab) {
+        chrome.tabs.remove(tabId, function() {
+          listenerList.splice(0, 1);
+          if (Object.keys(tabList).length >= data.length && listenerList?.length === 0) {
+            uploadUrlList(tabList, data);
+          }
+        });
+      } else {
+        console.log('Tab does not exist!', tab, tabTimer[tabId]);
+      }
+    });
+  }, 15000);
+});
+
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'popup') {
     if (message?.bind === OPEN_EXTENSION_BAT) {
@@ -45,7 +79,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 const clearDefaultValue = () => {
-
   for (let key in tabTimer) {
     if (!tabTimer[key]) delete tabTimer[key];
   }
@@ -94,9 +127,8 @@ function startGetUrlReferer(arr: Array<AllUrlType>) {
     if (listenerList.length >= 20) return;
     if (current < arr.length) {
       let urlVal = arr[current].home_url;
-      let dataVal: Array<AllUrlType> = data[current];
       chrome.tabs.create({ url: urlVal, selected: false, active: false }, (res: any) => {
-        dataVal['tab_id'] = res.id;
+        data[current]['tab_id'] = res.id;
         let url: any = res.url || res?.pendingUrl || urlVal;
         if (tabList[res.id]?.length > 0) {
           if (setDelEndLine(tabList[res.id][0]) !== setDelEndLine(url)) {
@@ -109,12 +141,15 @@ function startGetUrlReferer(arr: Array<AllUrlType>) {
         } else {
           tabList[res.id] = [setDelEndLine(url)];
         }
+        listenerList.push(current);
+        current++;
       });
-      listenerList.push(current);
-      current++;
     }
-    if (current >= arr.length) clearInterval(lisInter);
-  }, 500);
+    if (current >= arr.length) {
+      clearInterval(lisInter);
+      lisInter = null
+    }
+  }, 800);
 }
 
 function uploadUrlList(list, data) {
@@ -162,40 +197,6 @@ const setDelEndLine = (url) => {
   return u;
 };
 
-chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
-  if (currentType !== OPEN_EXTENSION_BAT) {
-    return;
-  }
-  if(tabList[tabId]?.length>1 && tabList[tabId][tabList[tabId].length - 1] === setDelEndLine(tab.url)){
-    return;
-  }
-  if (tabList[tabId]?.length > 0) {
-    if (tabList[tabId][tabList[tabId].length - 1] !== setDelEndLine(tab.url)) {
-      tabList[tabId].push(setDelEndLine(tab.url));
-    }
-  } else {
-    tabList[tabId] = [setDelEndLine(tab.url)];
-  }
-
-
-   tabTimer[tabId] = setTimeout(() => {
-     listenerList.splice(0, 1);
-     clearTimeout(tabTimer[tabId]);
-     tabTimer[tabId] = null;
-     chrome.tabs.remove(tabId, function() {
-       let timerReg = false;
-       for (let k in tabTimer) {
-         if(tabTimer[k] !== null){
-           timerReg = true;
-         }
-       }
-       if (Object.keys(tabList).length >= data.length && listenerList?.length === 0 && !timerReg) {
-         uploadUrlList(tabList, data);
-         console.log('上传')
-       }
-     });
-  }, 15000);
-});
 function clearDataListener() {
   clearInterval(lisInter);
   lisInter = null;
