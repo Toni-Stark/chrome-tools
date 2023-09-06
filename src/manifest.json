@@ -26,7 +26,17 @@
   ],
   "permissions": [
     "debugger",
-    "tabs"
+    "tabs",
+    "webRequest",
+    "activeTab",
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "http://www.dev.cms.cn",
+    "http://www.corp.360zhishu.cn",
+    "http://cmsv2.yyjun.pctop.cc",
+    "*://*/*"
   ],
   "commands": {
     "speak": {

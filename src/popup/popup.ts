@@ -1,64 +1,56 @@
-import { END_URL, LIST_URL } from '../config/types';
-
-let start = document.getElementsByClassName('start')[0];
-let end = document.getElementsByClassName('end')[0];
-start.addEventListener('click', (e) => {
-  chrome.runtime.sendMessage({ tab: LIST_URL, arr: urlList }, (result) => {
-    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    //   chrome.runtime.sendMessage({tab: tabs[0].id, isStart: true}, (contentResult) => {
-    //     console.log(contentResult)
-    //   });
-    // })
-  });
-});
-
-end.addEventListener('click', (e) => {
-  chrome.runtime.sendMessage({ tab: END_URL, arr: urlList }, (result) => {
-    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    //   chrome.runtime.sendMessage({tab: tabs[0].id, isStart: true}, (contentResult) => {
-    //     console.log(contentResult)
-    //   });
-    // })
-  });
-});
+// import { END_URL, LIST_URL } from '../config/types';
+//
+// let start = document.getElementsByClassName('start')[0];
+// let end = document.getElementsByClassName('end')[0];
+// start.addEventListener('click', (e) => {
+//   chrome.runtime.sendMessage({ tab: LIST_URL, arr: urlList }, (result) => {
+//   });
+// });
+// end.addEventListener('click', (e) => {
+//   chrome.runtime.sendMessage({ tab: END_URL }, (result) => {
+//   });
+// });
+//
 let urlList = [
-  'https://www.baidu.com/link?url=y9JBjG8RghHCBaFYNUVBQuSrZcM5aW1p9y66I8C6E68DHhyD8WrDlt4MPF_MrOx8&wd=&eqid=a641cde900003727000000066476ab76',
-  'http://sucheng.m.yiefun.com/150188.html',
-  'http://www.sggjsmgy.cn/',
-  'http://www.maiicy.cn/',
-  'http://yysy8.com/',
-  'http://www.shenzhoujiaxin.com/',
-  'http://fsqiming.com/',
-  'https://tjquanlilai.cn/',
-  'http://www.shenghecoffee.cn/',
-  'https://riwulighting.com/',
-  'http://gdvector.cn/',
-  'http://www.jmyaolian.cn/',
-  'http://yangtaicable.com/',
-  'http://yaolonggroup.com/',
-  'http://weidongjc.com/',
-  'http://dodoka.cc/',
-  'http://jingahs.com/',
-  'http://www.ts-zz.com/',
-  'http://www.sdpsjy.cn/',
-  'http://www.escocoupling.cn/',
-  'https://sdstone.com.cn/',
-  'https://kuanzhan.org/',
-  'https://uf-c.cn/',
-  'http://jyatoz.cn/',
-  'http://dlkhgd.cn/',
-  'http://www.zbythg.cn/',
-  'http://www.groupfangyuan.cn/',
-  'http://www.jmhaosheng.cn/',
-  'http://houdutech.com/',
-  'http://www.dakesheji.cn/',
-  'http://www.zhshirtmaster.cn/',
-  'http://www.zhengdanhua.cn/',
-  'http://chemplus-sci.com/',
-  'http://guodalighting.com/',
-  'http://www.bapc-heater.com/',
-  'http://minshengkonggu.cn/',
-  'http://www.xckwy.com/'
+  // 'http://bdt.mgzb1.xyz'
+  // 'https://www.baidu.com/link?url=y9JBjG8RghHCBaFYNUVBQuSrZcM5aW1p9y66I8C6E68DHhyD8WrDlt4MPF_MrOx8&wd=&eqid=a641cde900003727000000066476ab76',
+  // 'http://sucheng.m.yiefun.com/150188.html',
+  // 'http://www.sggjsmgy.cn/',
+  // 'http://www.maiicy.cn/',
+  // 'http://yysy8.com/',
+  // 'http://www.shenzhoujiaxin.com/',
+  // 'http://fsqiming.com/',
+  // 'https://tjquanlilai.cn/',
+  // 'http://www.shenghecoffee.cn/',
+  // 'https://riwulighting.com/',
+  // 'http://gdvector.cn/',
+  // 'http://www.jmyaolian.cn/',
+  // 'http://yangtaicable.com/',
+  // 'http://yaolonggroup.com/',
+  // 'http://weidongjc.com/',
+  // 'http://dodoka.cc/',
+  // 'http://jingahs.com/',
+  // 'http://www.ts-zz.com/',
+  // 'http://www.sdpsjy.cn/',
+  // 'http://www.escocoupling.cn/',
+  // 'https://sdstone.com.cn/',
+  // 'https://kuanzhan.org/',
+  // 'https://uf-c.cn/',
+  // 'http://jyatoz.cn/',
+  // 'http://dlkhgd.cn/',
+  // 'http://www.zbythg.cn/',
+  // 'http://www.groupfangyuan.cn/',
+  // 'http://www.jmhaosheng.cn/',
+  // 'http://houdutech.com/',
+  // 'http://www.dakesheji.cn/',
+  // 'http://www.zhshirtmaster.cn/',
+  // 'http://www.zhengdanhua.cn/',
+  // 'http://chemplus-sci.com/',
+  // 'http://guodalighting.com/',
+  // 'http://www.bapc-heater.com/',
+  // 'http://minshengkonggu.cn/',
+  // 'http://www.xckwy.com/',
+  // 'http://www.bynnmdph.com'
 ];
 
 let dataList = [
@@ -519,3 +511,75 @@ let dataList = [
   // 'http://www.rjvwdpij.com',
   // 'http://www.exwmwo.com'
 ];
+import { icp_tools_ops } from '../config';
+import { CLOSE_EXTENSION_BAT, OPEN_EXTENSION_BAT, SETTING_BAT_COOKIE, TAB_INFO } from '../config/types';
+
+const queryDom = (msg) => {
+  return document.querySelector(msg);
+};
+
+const getPopup = () => {
+  chrome.runtime.sendMessage({ type: 'popup', bind: OPEN_EXTENSION_BAT }, (result) => {
+    console.log(result, OPEN_EXTENSION_BAT);
+  });
+};
+
+const closePopup = () => {
+  chrome.runtime.sendMessage({ type: 'popup', bind: CLOSE_EXTENSION_BAT }, (result) => {
+    console.log(result, CLOSE_EXTENSION_BAT);
+  });
+};
+
+let index_ops = {
+  init: function () {
+    this.eventBind();
+    this.checkLogin();
+  },
+  eventBind: function () {
+    let els = document.querySelectorAll('.wrap_login .login');
+    els[0].addEventListener('click', () => {
+      icp_tools_ops.openUrl(icp_tools_ops.buildUrl('/home/user/login?from=ctbox'));
+    });
+    els[1].addEventListener('click', () => {
+      icp_tools_ops.openUrl(icp_tools_ops.buildUrl('/home/user/login?from=ctbox'));
+    });
+
+    // queryDom('.wrap_profile .scrm').addEventListener('click', () => {
+    //   icp_tools_ops.openUrl(icp_tools_ops.buildUrl('/scrm'));
+    // });
+
+    // queryDom('.wrap_profile .icp').addEventListener('click', () => {
+    //   icp_tools_ops.openUrl(icp_tools_ops.buildUrl('/icp'));
+    // });
+
+    // queryDom('.wrap_profile .setting').addEventListener('click', () => {
+    //   chrome.runtime.openOptionsPage();
+    //   window.close();
+    // });
+
+    // queryDom('.wrap_profile .extend_list').addEventListener('click', () => {
+    //   icp_tools_ops.openUrl('chrome://extensions/');
+    // });
+
+    queryDom('.wrap_profile .extension_bat').addEventListener('click', () => {
+      getPopup();
+    });
+    queryDom('.wrap_profile .close_extension_bat').addEventListener('click', () => {
+      closePopup();
+    });
+  },
+  checkLogin: function () {
+    icp_tools_ops.checkLogin((res, is_token) => {
+      // setCookiePopup(res);
+      this.renderPop(is_token);
+    });
+  },
+  renderPop: function (is_login) {
+    // console.log(is_login);
+    queryDom('.wrap_login').style.display = is_login ? 'none' : 'block';
+    queryDom('.wrap_profile').style.display = is_login ? 'block' : 'none';
+  }
+};
+
+icp_tools_ops.init(); //初始化，保证所有页面都一致
+index_ops.init();

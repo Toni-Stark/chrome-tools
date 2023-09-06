@@ -1,21 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Wavenet for Chrome</title>
-    <link rel="stylesheet" href="./popup.css">
-    <script src="./popup.js" async defer></script>
-  </head>
-  <body class="app">
-    <header class="header">
-      <div class="button-view">
-        <div class="start">开始运行</div>
-      </div>
-      <div class="button-view">
-        <div class="end">结束运行</div>
-      </div>
-    </header>
-  </body>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>核验工具</title>
+  <link rel="stylesheet" href="./popup.css">
+  <script src="./popup.js" async defer></script>
+</head>
+<body>
+<div class="container-fluid" style="padding: 0;">
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div class="panel panel-default wrap_login">
+    <div class="panel-body">
+      <p class="h4">
+        请先在 <span class="btn btn-link login" style="font-size: 18px;padding: 0;">www.corp.360zhishu.cn</span>中登录或找内部管理员开通账号
+      </p>
+      <p>
+        <button class="btn btn-success btn-block login">登录</button>
+      </p>
+    </div>
+  </div>
+  <div class="panel panel-default wrap_profile">
+    <div class="panel-heading">
+      快捷入口
+    </div>
+    <div class="panel-body">
+      <ul class="list-group">
+<!--        <li class="list-group-item scrm">-->
+<!--          <span class="btn btn-link">SCRM系统</span>-->
+<!--        </li>-->
+<!--        <li class="list-group-item icp">-->
+<!--          <span class="btn btn-link">ICP核查系统</span>-->
+<!--        </li>-->
+<!--        <li class="list-group-item setting">-->
+<!--          <span class="btn btn-link">扩展快捷键设置</span>-->
+<!--        </li>-->
+<!--        <li class="list-group-item extend_list">-->
+<!--          <span class="btn btn-link">扩展列表</span>-->
+<!--        </li>-->
+        <li class="list-group-item extension_bat">
+          <span class="btn btn-link">启动溯源机器人</span>
+        </li>
+        <li class="list-group-item close_extension_bat">
+          <span class="btn btn-link">关停溯源机器人</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
 </html>
