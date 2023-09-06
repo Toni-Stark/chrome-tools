@@ -519,13 +519,13 @@ const queryDom = (msg) => {
 };
 
 const getPopup = () => {
-  browser.runtime.sendMessage({ type: 'popup', bind: OPEN_EXTENSION_BAT }).then((result) => {
+  chrome.runtime.sendMessage({ type: 'popup', bind: OPEN_EXTENSION_BAT },(result) => {
     console.log(result, OPEN_EXTENSION_BAT);
   });
 };
 
 const closePopup = () => {
-  browser.runtime.sendMessage({ type: 'popup', bind: CLOSE_EXTENSION_BAT }).then((result) => {
+  chrome.runtime.sendMessage({ type: 'popup', bind: CLOSE_EXTENSION_BAT },(result) => {
     console.log(result, CLOSE_EXTENSION_BAT);
   });
 };

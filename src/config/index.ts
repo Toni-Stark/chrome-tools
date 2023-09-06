@@ -22,14 +22,14 @@ export const icp_tools_ops = {
     return url + _paramUrl;
   },
   openUrl: function (url) {
-    browser.tabs.create({ url: url });
+    chrome.tabs.create({ url: url });
   },
   getTokenName: function () {
     return 'cms_home_' + this.env;
   },
   checkLogin: function (callback) {
     console.log(this.buildUrl('/'), this.getTokenName());
-    browser.cookies.get({ name: this.getTokenName(), url: this.buildUrl('/') }).then( function (res) {
+    chrome.cookies.get({ name: this.getTokenName(), url: this.buildUrl('/') }, function (res) {
       let is_login = false;
       if (res && res.value) {
         is_login = true;

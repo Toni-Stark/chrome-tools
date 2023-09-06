@@ -14,7 +14,7 @@ let time1 = null;
 
 let currentType = CLOSE_EXTENSION_BAT;
 
-browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
+chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
   if (currentType !== OPEN_EXTENSION_BAT) {
     return;
   }
@@ -32,10 +32,11 @@ browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
   clearTimeout(tabTimer[tabId]);
   tabTimer[tabId] = null;
   tabTimer[tabId] = setTimeout(() => {
-    browser.tabs.get(tabId).then( function(tab) {
+    chrome.tabs.get(tabId,function(tab) {
       if (tab) {
-        browser.tabs.remove(tabId).then( function() {
+        chrome.tabs.remove(tabId,function() {
           listenerList.splice(0, 1);
+          console.log(Object.keys(tabList).length, data.length, listenerList?.length, 'log-1')
           if (Object.keys(tabList).length >= data.length && listenerList?.length === 0) {
             uploadUrlList(tabList, data);
           }
@@ -48,7 +49,7 @@ browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
 });
 
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'popup') {
     if (message?.bind === OPEN_EXTENSION_BAT) {
       currentType = OPEN_EXTENSION_BAT;
@@ -127,7 +128,7 @@ function startGetUrlReferer(arr: Array<AllUrlType>) {
     if (listenerList.length >= 20) return;
     if (current < arr.length) {
       let urlVal = arr[current].home_url;
-      browser.tabs.create({ url: urlVal, active: false }).then((res: any) => {
+      chrome.tabs.create({ url: urlVal, selected: false,  active: false },(res: any) => {
         data[current]['tab_id'] = res.id;
         let url: any = res.url || res?.pendingUrl || urlVal;
         if (tabList[res.id]?.length > 0) {
@@ -172,6 +173,7 @@ function uploadUrlList(list, data) {
       }
     }
   }
+  console.log(arr, data.length, data, 'log-2')
   if (Object.keys(arr).length < data.length) {
     // if (Object.keys(arr).length < data.length || !timerReg) {
     return;
