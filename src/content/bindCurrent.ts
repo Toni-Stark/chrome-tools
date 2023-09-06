@@ -1,7 +1,7 @@
 import { TAB_INFO } from '../config/types';
 
 export const openNewTab = (data) => {
-  chrome.runtime.sendMessage({ tab: TAB_INFO, data }, (result) => {
+  browser.runtime.sendMessage({ tab: TAB_INFO, data }).then( (result) => {
     console.log(result, 'res');
   });
 };

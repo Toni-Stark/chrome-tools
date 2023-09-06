@@ -14,7 +14,7 @@ let time1 = null;
 
 let currentType = CLOSE_EXTENSION_BAT;
 
-chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
+browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
   if (currentType !== OPEN_EXTENSION_BAT) {
     return;
   }
@@ -32,9 +32,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
   clearTimeout(tabTimer[tabId]);
   tabTimer[tabId] = null;
   tabTimer[tabId] = setTimeout(() => {
-    chrome.tabs.get(tabId, function(tab) {
+    browser.tabs.get(tabId).then( function(tab) {
       if (tab) {
-        chrome.tabs.remove(tabId, function() {
+        browser.tabs.remove(tabId).then( function() {
           listenerList.splice(0, 1);
           if (Object.keys(tabList).length >= data.length && listenerList?.length === 0) {
             uploadUrlList(tabList, data);
@@ -48,7 +48,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
 });
 
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'popup') {
     if (message?.bind === OPEN_EXTENSION_BAT) {
       currentType = OPEN_EXTENSION_BAT;
@@ -127,7 +127,7 @@ function startGetUrlReferer(arr: Array<AllUrlType>) {
     if (listenerList.length >= 20) return;
     if (current < arr.length) {
       let urlVal = arr[current].home_url;
-      chrome.tabs.create({ url: urlVal, selected: false, active: false }, (res: any) => {
+      browser.tabs.create({ url: urlVal, active: false }).then((res: any) => {
         data[current]['tab_id'] = res.id;
         let url: any = res.url || res?.pendingUrl || urlVal;
         if (tabList[res.id]?.length > 0) {
