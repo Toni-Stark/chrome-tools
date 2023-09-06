@@ -575,7 +575,7 @@ let index_ops = {
     });
   },
   renderPop: function (is_login) {
-    // console.log(is_login);
+    console.log(is_login);
     queryDom('.wrap_login').style.display = is_login ? 'none' : 'block';
     queryDom('.wrap_profile').style.display = is_login ? 'block' : 'none';
   }

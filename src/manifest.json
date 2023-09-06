@@ -1,7 +1,7 @@
 {
   "name": "url溯源工具",
   "version": "5",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "谷歌便捷工具",
   "icons": {
     "19": "assets/images/icon_19.png",
@@ -9,8 +9,10 @@
     "128": "assets/images/icon_128.png"
   },
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "persistent": true,
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
@@ -30,13 +32,11 @@
     "webRequest",
     "activeTab",
     "storage",
-    "cookies"
-  ],
-  "host_permissions": [
-    "http://www.dev.cms.cn",
-    "http://www.corp.360zhishu.cn",
-    "http://cmsv2.yyjun.pctop.cc",
-    "*://*/*"
+    "cookies",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>"
   ],
   "commands": {
     "speak": {
@@ -54,14 +54,8 @@
       "description": "Download selection"
     }
   },
-  "action": {
+  "browser_action": {
     "default_title": "Wavenet for Chrome",
-    "default_icon": {
-      "16": "assets/images/icon_16.png",
-      "19": "assets/images/icon_19.png",
-      "38": "assets/images/icon_38.png",
-      "48": "assets/images/icon_48.png"
-    },
     "default_popup": "popup/popup.html"
   },
   "homepage_url": "https://github.com/wavenet-for-chrome/extension"

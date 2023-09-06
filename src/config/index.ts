@@ -2,7 +2,7 @@ import { appConfig } from './appConfig';
 
 export const icp_tools_ops = {
   init: function () {
-    this.env = 'prod'; //当前环境，dev（本地开发环境） | inner (内部环境) | prod (生产环境)
+    this.env = 'dev'; //当前环境，dev（本地开发环境） | inner (内部环境) | prod (生产环境)
   },
   getHost: function () {
     return appConfig[this.env];
